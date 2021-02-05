@@ -1,3 +1,6 @@
+// battery is PIN 35
+// this site https://www.tinytronics.nl/shop/en/platforms/ttgo/lilygo-ttgo-t-energy-esp32-wrover-with-18650-battery-holder
+
 #include <driver/adc.h>
 #include "esp_adc_cal.h"
 
