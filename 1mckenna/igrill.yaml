@@ -211,6 +211,9 @@ automation:
           title: "Grill Temp Alert"
           message: "Grill temp outside limits. Currently {{ states.sensor.igrill_d481ca223348_probe_4.state }} °F"
           notification_id: grilltempalert
+      - service: notify.admin
+        data:
+          message: "Grill temp outside limits. Currently {{ states.sensor.igrill_d481ca223348_probe_4.state }} °F"          
   
   - alias: "Monitor Grill Temp Normal"
     initial_state: 'off'
@@ -224,6 +227,9 @@ automation:
           message: "Grill temp within limits. Currently {{ states.sensor.igrill_d481ca223348_probe_4.state }} °F"
           title: "Grill Temp Normal"
           notification_id: grilltempnormal
+      - service: notify.admin
+        data:
+          message: "Grill temp within limits. Currently {{ states.sensor.igrill_d481ca223348_probe_4.state }} °F"          
           
   
   - alias: "Probe 1 Target Temp"
@@ -238,6 +244,9 @@ automation:
           message: "Probe 1 has reached the target temp. Currently {{ states.sensor.igrill_d481ca223348_probe_1.state }} °F"
           title: "Probe 1 Target Temp"
           notification_id: probe1targettemp
+      - service: notify.admin
+        data:
+          message: "Probe 1 has reached the target temp. Currently {{ states.sensor.igrill_d481ca223348_probe_1.state }} °F"          
   
   - alias: "Probe 2 Target Temp"
     initial_state: 'off'
@@ -251,6 +260,9 @@ automation:
           message: "Probe 2 has reached the target temp. Currently {{ states.sensor.igrill_d481ca223348_probe_2.state }} °F"
           title: "Probe 2 Target Temp"
           notification_id: probe2targettemp
+      - service: notify.admin
+        data:
+          message: "Probe 2 has reached the target temp. Currently {{ states.sensor.igrill_d481ca223348_probe_2.state }} °F"              
   
   - alias: "Probe 3 Target Temp"
     initial_state: 'off'
@@ -264,6 +276,9 @@ automation:
           message: "Probe 3 has reached the target temp. Currently {{ states.sensor.igrill_d481ca223348_probe_3.state }} °F"
           title: "Probe 3 Target Temp"
           notification_id: probe3targettemp
+      - service: notify.admin
+        data:
+          message: "Probe 3 has reached the target temp. Currently {{ states.sensor.igrill_d481ca223348_probe_3.state }} °F"              
   
   - alias: "Probe 4 Target Temp"
     initial_state: 'off'
@@ -277,7 +292,10 @@ automation:
           message: "Probe 4 has reached the target temp. Currently {{ states.sensor.igrill_d481ca223348_probe_4.state }} °F"
           title: "Probe 4 Target Temp"
           notification_id: probe4targettemp
-  
+      - service: notify.admin
+        data:
+          message: "Probe 4 has reached the target temp. Currently {{ states.sensor.igrill_d481ca223348_probe_4.state }} °F" 
+          
   - alias: "Monitor iGrill Device Connectivity Offline"
     initial_state: 'on'
     trigger:
@@ -292,7 +310,9 @@ automation:
           message: "!! - iGrill Device Disconnected - !!"
           title: "iGrill Device Connectivity"
           notification_id: igrilldeviceconnectivity 
-        
+      - service: notify.admin
+        data:
+          message: "!! - iGrill Device Disconnected - !!"        
   
   - alias: "Monitor iGrill Device Connectivity Online"
     initial_state: 'on'
@@ -305,9 +325,12 @@ automation:
     action:
       - service: persistent_notification.create
         data:
-          message: "!! - iGrill Device Connected - Prob Monitoring Activated!!"
+          message: "!! - iGrill Device Connected - Probe Monitoring Activated!!"
           title: "iGrill Device Connectivity"
           notification_id: igrilldeviceconnectivityonline
+      - service: notify.admin
+        data:
+          message: "!! - iGrill Device Connected - Probe Monitoring Activated!!"            
       - service: automation.turn_on
         data_template:
           entity_id: >-
