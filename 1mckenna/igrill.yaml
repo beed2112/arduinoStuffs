@@ -1,0 +1,319 @@
+################################################################
+## Packages / igrill
+################################################################
+
+################################################
+## Customize d481ca223348 d481ca223348
+################################################
+homeassistant:
+  customize:
+    ################################################
+    ## Node Anchors
+    ################################################
+
+    package.node_anchors:
+      customize: &customize
+        package: 'igrill.yaml'
+ 
+    input_number.igrill_alert_low:
+      <<: *customize
+    input_number.igrill_alert_high:
+      <<: *customize
+    input_number.igrill_probe_1_target:
+      <<: *customize
+    input_number.igrill_probe_2_target:
+      <<: *customize
+    input_number.igrill_probe_3_target:
+      <<: *customize
+    input_number.igrill_probe_4_target:
+      <<: *customize
+
+    sensor.grill_alert_temp:
+      <<: *customize
+    sensor.target_alert_temp_probe_1:
+      <<: *customize
+    sensor.target_alert_temp_probe_2:
+      <<: *customize
+    sensor.target_alert_temp_probe_3:
+      <<: *customize
+    sensor.target_alert_temp_probe_4:
+      <<: *customize
+    sensor.igrill_d481ca223348_battery_level:
+      <<: *customize
+      friendly_name: "iGrill Battery Level"
+    sensor.igrill_d481ca223348_esp32_battery_voltage:
+      <<: *customize
+      friendly_name: "ESP Battery Volts"
+    sensor.igrill_d481ca223348_probe_1:  
+      <<: *customize
+      friendly_name: "Probe 1 Temperature"      
+    sensor.igrill_d481ca223348_probe_2:  
+      <<: *customize
+      friendly_name: "Probe 2 Temperature"
+    sensor.igrill_d481ca223348_probe_3:  
+      <<: *customize
+      friendly_name: "Probe 3 Temperature"
+    sensor.igrill_d481ca223348_probe_4:  
+      <<: *customize
+      friendly_name: "Probe 4 Temperature"    
+    automation.monitor_grill_temp_alert:  
+      <<: *customize
+      friendly_name: "iGrill Temp Alert" 
+      icon: 'mdi:thermometer-alert' 
+
+    automation.monitor_grill_temp_normal:
+      <<: *customize
+      friendly_name: "iGrill Temp Normal"
+      icon: 'mdi:thermometer-alert'
+
+    automation.monitor_igrill_device_connectivity_offline:
+      <<: *customize
+      friendly_name: "iGrill Offline" 
+      icon: 'mdi:access-point-off'             
+    automation.monitor_igrill_device_connectivity_online:
+      <<: *customize
+      friendly_name: "iGrill Online" 
+      icon: 'mdi:access-point'                   
+
+    automation.probe_1_target_temp:
+      <<: *customize
+      friendly_name: "Monitor Probe 1 Temp"
+      icon: 'mdi:thermometer-alert'       
+    automation.probe_2_target_temp:
+      <<: *customize
+      friendly_name: "Monitor Probe 2 Temp"
+      icon: 'mdi:thermometer-alert'       
+    automation.probe_3_target_temp:
+      <<: *customize
+      friendly_name: "Monitor Probe 3 Temp"
+      icon: 'mdi:thermometer-alert'       
+    automation.probe_4_target_temp:
+      <<: *customize
+      friendly_name: "Monitor Probe 4 Temp"
+      icon: 'mdi:thermometer-alert'              
+
+################################################
+## iGRILL ALERT  SLIDERS 
+################################################
+
+input_number:
+  igrill_alert_low:
+    name: Grill Low Temp
+    initial: 150
+    min: 100
+    max: 500
+    step: 5
+  igrill_alert_high:
+    name: Grill High Temp
+    initial: 340
+    min: 100
+    max: 500
+    step: 5
+  igrill_probe_1_target:
+    name: Probe 1 Target Temp
+    initial: 160
+    min: 60
+    max: 250
+    step: 1
+  igrill_probe_2_target:
+    name: Probe 2 Target Temp
+    initial: 160
+    min: 60
+    max: 250
+    step: 1
+  igrill_probe_3_target:
+    name: Probe 3 Target Temp
+    initial: 160
+    min: 60
+    max: 250
+    step: 1
+  igrill_probe_4_target:
+    name: Probe 4 Target Temp
+    initial: 160
+    min: 60
+    max: 250
+    step: 1
+      
+################################################
+## iGRILL ALERT SENSORS
+################################################
+sensor: 
+  - platform: template
+    sensors:
+      grill_alert_temp:
+        value_template: >-
+          {% if (states.sensor.igrill_d481ca223348_probe_4.state | int) < (states.input_number.igrill_alert_low.state | int) or (states.sensor.igrill_d481ca223348_probe_4.state | int)  > (states.input_number.igrill_alert_high.state | int) %}
+            Alert
+          {% else %}
+            Normal
+          {% endif %}
+        friendly_name: Grill Temp Alert
+        
+  - platform: template
+    sensors:
+      target_alert_temp_probe_1:
+        value_template: >-
+          {% if (states.sensor.igrill_d481ca223348_probe_1.state | int) >= (states.input_number.igrill_probe_1_target.state | int) %}
+            Alert
+          {% else %}
+            Normal
+          {% endif %}
+        friendly_name: Probe 1 Target Alert
+  - platform: template
+    sensors:
+      target_alert_temp_probe_2:
+        value_template: >-
+          {% if (states.sensor.igrill_d481ca223348_probe_2.state | int) >= (states.input_number.igrill_probe_2_target.state | int) %}
+            Alert
+          {% else %}
+            Normal
+          {% endif %}
+        friendly_name: Probe 2 Target Alert
+  - platform: template
+    sensors:
+      target_alert_temp_probe_3:
+        value_template: >-
+          {% if (states.sensor.igrill_d481ca223348_probe_3.state | int) >= (states.input_number.igrill_probe_3_target.state | int) %}
+            Alert
+          {% else %}
+            Normal
+          {% endif %}
+        friendly_name: Probe 3 Target Alert
+  - platform: template
+    sensors:
+      target_alert_temp_probe_4:
+        value_template: >-
+          {% if (states.sensor.igrill_d481ca223348_probe_4.state | int) >= (states.input_number.igrill_probe_4_target.state | int) %}
+            Alert
+          {% else %}
+            Normal
+          {% endif %}
+        friendly_name: Probe 4 Target Alert
+  
+  - platform: mqtt
+    state_topic: "homeassistant/sensor/igrill_d481ca223348/status"
+    name: ESP32 iGrill BLE Client
+    json_attributes_topic: "homeassistant/sensor/igrill_d481ca223348/systeminfo"
+  
+################################################
+## iGRILL ALERT AUTOMATIONS
+################################################
+automation:
+  - alias: "Monitor Grill Temp Alert"
+    initial_state: 'off'
+    trigger:
+      - platform: state
+        entity_id: sensor.igrill_alert_temp
+        to: 'Alert'
+    action:
+      - service: persistent_notification.create
+        data: 
+          title: "Grill Temp Alert"
+          message: "Grill temp outside limits. Currently {{ states.sensor.igrill_d481ca223348_probe_4.state }} °F"
+          notification_id: grilltempalert
+  
+  - alias: "Monitor Grill Temp Normal"
+    initial_state: 'off'
+    trigger:
+      - platform: state
+        entity_id: sensor.igrill_alert_temp
+        to: 'Normal'
+    action:
+      - service: persistent_notification.create
+        data:
+          message: "Grill temp within limits. Currently {{ states.sensor.igrill_d481ca223348_probe_4.state }} °F"
+          title: "Grill Temp Normal"
+          notification_id: grilltempnormal
+          
+  
+  - alias: "Probe 1 Target Temp"
+    initial_state: 'off'
+    trigger:
+      - platform: state
+        entity_id: sensor.target_alert_temp_probe_1
+        to: 'Alert'
+    action:
+      - service: persistent_notification.create
+        data:
+          message: "Probe 1 has reached the target temp. Currently {{ states.sensor.igrill_d481ca223348_probe_1.state }} °F"
+          title: "Probe 1 Target Temp"
+          notification_id: probe1targettemp
+  
+  - alias: "Probe 2 Target Temp"
+    initial_state: 'off'
+    trigger:
+      - platform: state
+        entity_id: sensor.target_alert_temp_probe_2
+        to: 'Alert'
+    action:
+      - service: persistent_notification.create
+        data:
+          message: "Probe 2 has reached the target temp. Currently {{ states.sensor.igrill_d481ca223348_probe_2.state }} °F"
+          title: "Probe 2 Target Temp"
+          notification_id: probe2targettemp
+  
+  - alias: "Probe 3 Target Temp"
+    initial_state: 'off'
+    trigger:
+      - platform: state
+        entity_id: sensor.target_alert_temp_probe_3
+        to: 'Alert'
+    action:
+      - service: persistent_notification.create
+        data:
+          message: "Probe 3 has reached the target temp. Currently {{ states.sensor.igrill_d481ca223348_probe_3.state }} °F"
+          title: "Probe 3 Target Temp"
+          notification_id: probe3targettemp
+  
+  - alias: "Probe 4 Target Temp"
+    initial_state: 'off'
+    trigger:
+      - platform: state
+        entity_id: sensor.target_alert_temp_probe_4
+        to: 'Alert'
+    action:
+      - service: persistent_notification.create
+        data:
+          message: "Probe 4 has reached the target temp. Currently {{ states.sensor.igrill_d481ca223348_probe_4.state }} °F"
+          title: "Probe 4 Target Temp"
+          notification_id: probe4targettemp
+  
+  - alias: "Monitor iGrill Device Connectivity Offline"
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: sensor.esp32_igrill_ble_client
+        to: 'offline'
+        for:
+          minutes: 5
+    action:
+      - service: persistent_notification.create
+        data:
+          message: "!! - iGrill Device Disconnected - !!"
+          title: "iGrill Device Connectivity"
+          notification_id: igrilldeviceconnectivity 
+        
+  
+  - alias: "Monitor iGrill Device Connectivity Online"
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: sensor.esp32_igrill_ble_client
+        to: 'online'
+#        for:
+#          minutes: 5
+    action:
+      - service: persistent_notification.create
+        data:
+          message: "!! - iGrill Device Connected - Prob Monitoring Activated!!"
+          title: "iGrill Device Connectivity"
+          notification_id: igrilldeviceconnectivityonline
+      - service: automation.turn_on
+        data_template:
+          entity_id: >-
+            {%- set comma = joiner(', ') -%}
+            {%- for x in states.automation if x.attributes.package == 'igrill.yaml' if x.state == 'off' -%}
+              {{- comma() -}}
+              {{- x.entity_id -}}
+            {%- endfor -%}               
+  
