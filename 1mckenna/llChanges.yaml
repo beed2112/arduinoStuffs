@@ -1,0 +1,25 @@
+                title: Temperature Alerting
+                entities:
+                  - entity: automation.monitor_grill_temp_alert
+                    name: Monitor Grill High Temp
+                    icon: 'mdi:thermometer-alert'
+                  - entity: automation.monitor_grill_temp_normal
+                    name: Monitor Grill Low Temp
+                    icon: 'mdi:thermometer-alert'
+                  - entity: automation.probe_1_target_temp
+                    name: Monitor Probe 1 Temp
+                    icon: 'mdi:thermometer-alert'
+                  - entity: automation.probe_2_target_temp
+                    name: Monitor Probe 2 Temp
+                    icon: 'mdi:thermometer-alert'
+                  - entity: automation.probe_3_target_temp
+                    name: Monitor Probe 3 Temp
+                    icon: 'mdi:thermometer-alert'
+                  - entity: automation.probe_4_target_temp
+                    name: Monitor Probe 4 Temp
+                    icon: 'mdi:thermometer-alert'
+                  - entity: automation.monitor_igrill_device_connectivity_offline
+                    icon: 'mdi:access-point'
+                  - entity: automation.monitor_igrill_device_connectivity_online
+                show_header_toggle: false
+                state_color: true
