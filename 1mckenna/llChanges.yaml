@@ -210,5 +210,8 @@
                   - entity: automation.monitor_igrill_device_connectivity_offline
                     icon: 'mdi:access-point'
                   - entity: automation.monitor_igrill_device_connectivity_online
+                    icon: 'mdi:access-point'
+                  - entity: sensor.offline_watchdog
+                    icon: 'mdi:timer'
                 show_header_toggle: false
                 state_color: true
